@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useEffect } from 'react';
+import { useCallback } from 'react';
 import './App.css';
 
 function App() {
@@ -66,9 +67,9 @@ function App() {
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [autoPlay, expectedNumber, status]);
+  }, [autoPlay, expectedNumber, status, handleNumberClick]);
 
-  const handleNumberClick = (number) => {
+  const handleNumberClick = useCallback((number) => {
     if (status !== 'playing') return;
 
     if (autoPlay && number !== expectedNumber) {
@@ -88,7 +89,7 @@ function App() {
     } else {
       setStatus('lost');
     }
-  };
+  }, [status, autoPlay, expectedNumber]);
   return (
     <div className="Container">
       {status === 'ready' && <h1>LET'S PLAY!</h1>}
