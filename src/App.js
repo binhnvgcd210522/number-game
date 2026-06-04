@@ -75,11 +75,13 @@ function App() {
         )
       );
 
-      setExpectedNumber(prev => prev + 1);
+      if (expectedNumber < points) {
+        setExpectedNumber(prev => prev + 1);
+      }
     } else {
       setStatus('lost');
     }
-  }, [status, autoPlay, expectedNumber]);
+  }, [status, autoPlay, expectedNumber, points]);
 
   useEffect(() => {
     if (!autoPlay || status !== "playing") return;
@@ -91,7 +93,7 @@ function App() {
     return () => clearInterval(interval);
   }, [autoPlay, expectedNumber, status, handleNumberClick]);
 
-  
+
   return (
     <div className="Container">
       {status === 'ready' && <h1>LET'S PLAY!</h1>}
