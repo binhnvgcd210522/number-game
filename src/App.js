@@ -59,16 +59,6 @@ function App() {
     }
   }, [numbers, status]);
 
-  useEffect(() => {
-    if (!autoPlay || status !== "playing") return;
-
-    const interval = setInterval(() => {
-      handleNumberClick(expectedNumber);
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, [autoPlay, expectedNumber, status, handleNumberClick]);
-
   const handleNumberClick = useCallback((number) => {
     if (status !== 'playing') return;
 
@@ -90,6 +80,18 @@ function App() {
       setStatus('lost');
     }
   }, [status, autoPlay, expectedNumber]);
+
+  useEffect(() => {
+    if (!autoPlay || status !== "playing") return;
+
+    const interval = setInterval(() => {
+      handleNumberClick(expectedNumber);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [autoPlay, expectedNumber, status, handleNumberClick]);
+
+  
   return (
     <div className="Container">
       {status === 'ready' && <h1>LET'S PLAY!</h1>}
